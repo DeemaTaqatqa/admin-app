@@ -15,21 +15,12 @@ function Layout() {
     const storedRegistered = JSON.parse(sessionStorage.getItem('registered'));
     const storedRefreshToken = JSON.parse(sessionStorage.getItem('refreshToken'));
 
-
-    // console.log(storedRegistered)
-    // console.log(typeof (storedToken))
-    // console.log(typeof (storedExpire))
-    // console.log(typeof (storedEmail))
-
-
     const [email, setEmail] = useState(storedEmail);
     const [idToken, setIdToken] = useState(storedToken);
     const [registered, setRegistered] = useState(storedRegistered);
     const [expiresIn, setExpiresIn] = useState(storedExpire);
     const [refreshToken, setRefreshToken] = useState(storedRefreshToken);
     const [isRegistered, setIsRegistered] = useState(false);
-
-    //console.log(expiresIn)
 
 
     const auth = {
@@ -66,10 +57,6 @@ function Layout() {
                 // console.log(resp.data.registered)
                 // console.log(resp.data.expiresIn)
             }
-            // else {
-            //     console.warn("this api is failed");
-            // }
-
             return resp
         },
         signup: async (email, password) => {
@@ -93,9 +80,6 @@ function Layout() {
                 sessionStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
 
             }
-            // else {
-            //     console.warn("this api is failed");
-            // }
 
             return resp
         }
@@ -119,7 +103,7 @@ function Layout() {
             const resp = await getRequest(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`, 'POST', {
                 "idToken": idToken,
                 "password": password,
-                "returnSecureToken": true // should it be true always
+                "returnSecureToken": true
             });
 
             console.log(resp.data)
@@ -136,9 +120,7 @@ function Layout() {
                 sessionStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
 
             }
-            else {
-                console.warn("this api is failed");
-            }
+            
 
             return resp
         }
