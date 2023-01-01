@@ -1,0 +1,33 @@
+$color1: #38015c;
+$color2: #f1e1fc;
+$color3 :#9f5ccc;
+
+.card {
+    background-color: $color1;
+    margin-top: 60px;
+
+}
+
+label {
+    color: $color2;
+
+}
+
+.email-input,
+.password-input {
+    background-color: $color2;
+    height: 32px;
+}
+
+.btn-enter {
+    background-color: $color3;
+    outline-color: $color1;
+}
+
+.btn-create {
+    color: $color3;
+}
+.error-message{
+    color: rgb(157, 34, 34);
+
+}
