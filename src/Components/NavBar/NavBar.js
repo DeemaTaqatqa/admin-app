@@ -7,17 +7,20 @@ import "./NavBar.scss";
 //@Todo to use the state instead of changing in button
 
 function NavBar() {
-    const [btnState, setBtnState] = useState("Login")
-    const [profileActiveState, setProfileActiveState] = useState(false)
-    const [logActiveState, setLogActiveState] = useState(true)
+    //const [btnState, setBtnState] = useState("Login")
+    
 
     const auth = useContext(GlobalContext).auth;
+    const changePassowrd = useContext(GlobalContext).changePassowrd;
     //const isRegistered = auth.isRegistered
     const isRegistered = auth.registered
-
-    //console.log(isRegistered)
+    const [profileActiveState, setProfileActiveState] = useState(changePassowrd.profileActiveState)
+    const [logActiveState, setLogActiveState] = useState(changePassowrd.logActiveState)
+    console.log(isRegistered)
     const navigate = useNavigate();
-
+    //console.log(profileActiveState)
+    //console.log(logActiveState)
+   
     //console.log(auth.idToken);
     function onLogout() {
         //if (auth.email) {
@@ -27,8 +30,8 @@ function NavBar() {
         //}
 
         navigate('/')
-        console.log(profileActiveState)
-        console.log(logActiveState)
+        //console.log(profileActiveState)
+        //console.log(logActiveState)
 
     }
     function onProfileClicked() {
@@ -36,6 +39,10 @@ function NavBar() {
         setProfileActiveState(true)
         setLogActiveState(false)
         navigate('/profile')
+        if(!isRegistered){
+            setLogActiveState(true)
+            setProfileActiveState(false)
+        }
         console.log(profileActiveState)
         console.log(logActiveState)
 
@@ -59,7 +66,8 @@ function NavBar() {
                         </li>
                         <li className="navbar-nav-btn me-5">
                             <button onClick={onLogout} className={`btn nav-link text-white fw-bold ${logActiveState ? "active" : ""}`}>
-                                {`${isRegistered ? "Logout" : "Login"}`}
+                                {/* {`${isRegistered ? "Logout" : "Login"}`} */}
+                                Logout
                             </button>
                         </li>
 
@@ -68,7 +76,7 @@ function NavBar() {
                     <ul className="navbar-nav navbar-nav ms-auto mb-2 mb-lg-0 ">
                         <li className="navbar-nav-btn me-5">
                             <button className=" btn nav-link text-white fw-bold ">
-                                {btnState}
+                                Login
                             </button>
                         </li>
                     </ul>

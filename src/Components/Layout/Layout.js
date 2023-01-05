@@ -14,6 +14,8 @@ function Layout() {
     const storedExpire = JSON.parse(sessionStorage.getItem('expiresIn'));
     const storedRegistered = JSON.parse(sessionStorage.getItem('registered'));
     const storedRefreshToken = JSON.parse(sessionStorage.getItem('refreshToken'));
+    const storedLogActiveState = JSON.parse(localStorage.getItem('logActiveState'));
+    const storedProfileActiveState = JSON.parse(localStorage.getItem('profileActiveState'));
 
     const [email, setEmail] = useState(storedEmail);
     const [idToken, setIdToken] = useState(storedToken);
@@ -21,7 +23,8 @@ function Layout() {
     const [expiresIn, setExpiresIn] = useState(storedExpire);
     const [refreshToken, setRefreshToken] = useState(storedRefreshToken);
     const [isRegistered, setIsRegistered] = useState(false);
-
+    const [logActiveState, setLogActiveState] = useState(storedLogActiveState)
+    const [profileActiveState, setProfileActiveState] = useState(storedProfileActiveState)
 
     const auth = {
         email,
@@ -88,9 +91,9 @@ function Layout() {
             setEmail("");
             setIdToken("");
             setExpiresIn("");
-            setIsRegistered(false)
             setRegistered(false);
-            setRefreshToken("")
+            setRefreshToken("");
+
             sessionStorage.clear();
         }
     }
@@ -99,6 +102,8 @@ function Layout() {
         idToken,
         expiresIn,
         refreshToken,
+        profileActiveState,
+        logActiveState,
         newPassword: async (idToken, password) => {
             const resp = await getRequest(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`, 'POST', {
                 "idToken": idToken,
@@ -113,14 +118,17 @@ function Layout() {
                 setExpiresIn(resp.data.expiresIn);
                 setRegistered(false);
                 setRefreshToken(resp.data.refreshToken);
-
+                setLogActiveState(true);
+                setProfileActiveState(false);
                 sessionStorage.setItem('email', resp.data.email)
                 sessionStorage.setItem('idToken', JSON.stringify(resp.data.idToken))
                 sessionStorage.setItem('expiresIn', JSON.stringify(resp.data.expiresIn))
                 sessionStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
+                localStorage.setItem('logActiveState', JSON.stringify(true))
+                localStorage.setItem('profileActiveState', JSON.stringify(false))
 
             }
-            
+
 
             return resp
         }
