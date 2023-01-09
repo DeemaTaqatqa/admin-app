@@ -12,7 +12,7 @@ function Layout() {
     const storedEmail = sessionStorage.getItem('email');
     const storedToken = JSON.parse(sessionStorage.getItem('idToken'));
     const storedExpire = JSON.parse(sessionStorage.getItem('expiresIn'));
-    const storedRegistered = JSON.parse(sessionStorage.getItem('registered'));
+    const storedRegistered = JSON.parse(localStorage.getItem('registered'));
     const storedRefreshToken = JSON.parse(sessionStorage.getItem('refreshToken'));
     const storedLogActiveState = JSON.parse(localStorage.getItem('logActiveState'));
     const storedProfileActiveState = JSON.parse(localStorage.getItem('profileActiveState'));
@@ -52,7 +52,7 @@ function Layout() {
                 sessionStorage.setItem('email', resp.data.email)
                 sessionStorage.setItem('idToken', JSON.stringify(resp.data.idToken))
                 sessionStorage.setItem('expiresIn', JSON.stringify(resp.data.expiresIn))
-                sessionStorage.setItem('registered', JSON.stringify(resp.data.registered))
+                localStorage.setItem('registered', JSON.stringify(resp.data.registered))
                 sessionStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
 
 
@@ -93,7 +93,7 @@ function Layout() {
             setExpiresIn("");
             setRegistered(false);
             setRefreshToken("");
-
+            //localStorage.clear();
             sessionStorage.clear();
         }
     }
@@ -142,6 +142,7 @@ function Layout() {
                 <Outlet />
             </div>
         </GlobalContext.Provider >
+        
     )
 }
 export default Layout;

@@ -6,6 +6,9 @@ import Layout from "./Components/Layout/Layout";
 import Profile from "./Pages/Profile/Profile";
 import Home from "./Pages/Home/Home";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
+import RequireAuth from "./Components/RequireAuth/RequireAuth";
+import IsUnAuth from "./Components/RequireAuth/IsUnAuth";
+
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
 
@@ -23,11 +26,10 @@ class App extends React.Component {
         // I have to add error routing
         <Route element={<Layout />} errorElement={<PageNotFound />}>
 
-          <Route path={'/'} element={<Login />} />
-          <Route path={"/profile"} element={<Profile />} />
-          <Route path={"/home"} element={<Home />} />
+          <Route path={'/'} element={<IsUnAuth><Login /></IsUnAuth>} />
+          <Route path={"/profile"} element={<RequireAuth><Profile /></RequireAuth>} />
+          <Route path={"/home"} element={<RequireAuth><Home /></RequireAuth>} />
 
-          {/*<Route path={"/info/:id"} element={<Info />} /> */}
         </Route>
 
       )

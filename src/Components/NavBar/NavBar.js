@@ -14,12 +14,12 @@ function NavBar() {
     const changePassowrd = useContext(GlobalContext).changePassowrd;
     //const isRegistered = auth.isRegistered
     const isRegistered = auth.registered
-    const [profileActiveState, setProfileActiveState] = useState(changePassowrd.profileActiveState)
-    const [logActiveState, setLogActiveState] = useState(changePassowrd.logActiveState)
-    console.log(isRegistered)
+    const [profileActiveState, setProfileActiveState] = useState(false)
+    const [logActiveState, setLogActiveState] = useState(true)
+    //console.log(isRegistered)
     const navigate = useNavigate();
-    //console.log(profileActiveState)
-    //console.log(logActiveState)
+    console.log(profileActiveState);
+    console.log(logActiveState);
    
     //console.log(auth.idToken);
     function onLogout() {
@@ -30,8 +30,8 @@ function NavBar() {
         //}
 
         navigate('/')
-        //console.log(profileActiveState)
-        //console.log(logActiveState)
+        console.log(profileActiveState)
+        console.log(logActiveState)
 
     }
     function onProfileClicked() {
@@ -39,10 +39,10 @@ function NavBar() {
         setProfileActiveState(true)
         setLogActiveState(false)
         navigate('/profile')
-        if(!isRegistered){
-            setLogActiveState(true)
-            setProfileActiveState(false)
-        }
+        // if(!isRegistered){
+        //     setLogActiveState(true)
+        //     setProfileActiveState(false)
+        // }
         console.log(profileActiveState)
         console.log(logActiveState)
 
