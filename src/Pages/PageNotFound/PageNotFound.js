@@ -21,9 +21,8 @@ function PageNotFound() {
                         </span>
                     }
                 </div>
-                <Link className="text-body btn mt-5 btn-link fw-bold" to='/'>Return to your home page</Link>
+                <Link className="text-body btn mt-5 btn-link fw-bold" to='/login'>Return to your home page</Link>
             </div>
-
         </div>
     )
 }

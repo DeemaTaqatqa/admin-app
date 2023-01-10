@@ -13,11 +13,9 @@ function Login() {
     const [loginBtnLabel, setLoginBtnLabel] = useState("Login")
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [iswaiting, setIsWaiting] = useState(false)
 
     const auth = useContext(GlobalContext).auth;
-    //const isRegistered = auth.registered
-    //console.log(isRegistered)
-
     const navigate = useNavigate();
 
     async function OnCreateClicked(e) {
@@ -44,17 +42,22 @@ function Login() {
 
     async function OnLoginClicked(e) {
         e.preventDefault()
+        setIsWaiting(true)
 
         if (loginBtnLabel === "Login") {
             const resp = await auth.signin(email, password)
-
+            setIsWaiting(false)
+            console.log(resp)
             if (resp.status === 200) {
-
-                navigate('/home')
-
+                navigate('/')
+                //console.log("status successed")
+            }
+            else if (email === "") {
+                setError(true)
+                setErrorMessage("Email is a required field")
             }
             else {
-                const _errormessage =  resp.data.error.message.toLowerCase();
+                const _errormessage = resp.data.error.message.toLowerCase();
                 const errormessage = _errormessage.replaceAll("_", " ")
                 setError(true)
                 setErrorMessage(errormessage)
@@ -64,7 +67,7 @@ function Login() {
         if (loginBtnLabel === "Create Account") {
 
             const resp = await auth.signup(email, password)
-           
+
             if (resp.status === 200) {
                 setTitle("Login")
                 setLoginBtnLabel("Login")
@@ -74,7 +77,10 @@ function Login() {
                 setError(false)
 
             }
-        
+            else if (email === "") {
+                setError(true)
+                setErrorMessage("Email is a required field")
+            }
             else {
                 const _errormessage = resp.data.error.message.toLowerCase();
                 const errormessage = _errormessage.replaceAll("_", " ")
@@ -117,11 +123,10 @@ function Login() {
                             : ""
                         }
                         <div className="col d-flex justify-content-center">
-                            <button className="btn-enter btn text-white mt-4 w-50">{loginBtnLabel}</button>
+                            <button disabled={iswaiting} className="btn-enter btn text-white mt-4 w-50">{loginBtnLabel}</button>
                         </div>
                     </form>
                     <button className="btn-create btn col-md-12 text-center mt-2" onClick={OnCreateClicked}>{createBtnLabel}</button>
-
 
                 </div>
 

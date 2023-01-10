@@ -19,7 +19,7 @@ function Profile() {
         const resp = await changePassowrd.newPassword(idToken, newPassword)
         if (resp.status === 200) {
             auth.logout();
-            navigate('/')
+            navigate('/login')
         }
         else {
             const _errormessage = resp.data.error.message.toLowerCase();

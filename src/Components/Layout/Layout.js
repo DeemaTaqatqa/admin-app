@@ -9,11 +9,11 @@ const API_KEY = "AIzaSyDYub39l5rplWuw4NHCAwDcaOErMXiU56I";
 
 function Layout() {
 
-    const storedEmail = sessionStorage.getItem('email');
-    const storedToken = JSON.parse(sessionStorage.getItem('idToken'));
-    const storedExpire = JSON.parse(sessionStorage.getItem('expiresIn'));
+    const storedEmail = localStorage.getItem('email');
+    const storedToken = JSON.parse(localStorage.getItem('idToken'));
+    const storedExpire = JSON.parse(localStorage.getItem('expiresIn'));
     const storedRegistered = JSON.parse(localStorage.getItem('registered'));
-    const storedRefreshToken = JSON.parse(sessionStorage.getItem('refreshToken'));
+    const storedRefreshToken = JSON.parse(localStorage.getItem('refreshToken'));
     const storedLogActiveState = JSON.parse(localStorage.getItem('logActiveState'));
     const storedProfileActiveState = JSON.parse(localStorage.getItem('profileActiveState'));
 
@@ -22,15 +22,18 @@ function Layout() {
     const [registered, setRegistered] = useState(storedRegistered);
     const [expiresIn, setExpiresIn] = useState(storedExpire);
     const [refreshToken, setRefreshToken] = useState(storedRefreshToken);
-    const [isRegistered, setIsRegistered] = useState(false);
     const [logActiveState, setLogActiveState] = useState(storedLogActiveState)
     const [profileActiveState, setProfileActiveState] = useState(storedProfileActiveState)
+    console.log(email)
+    console.log(idToken)
+    console.log(registered)
+    console.log(expiresIn)
+    //console.log(idToken)
 
     const auth = {
         email,
         idToken,
         registered,
-        isRegistered,
         expiresIn,
         refreshToken,
         signin: async (email, password) => {
@@ -47,18 +50,15 @@ function Layout() {
                 setRegistered(resp.data.registered);
                 setExpiresIn(resp.data.expiresIn);
                 setRefreshToken(resp.data.refreshToken);
-                setIsRegistered(true)
-                //console.log(isRegistered)
-                sessionStorage.setItem('email', resp.data.email)
-                sessionStorage.setItem('idToken', JSON.stringify(resp.data.idToken))
-                sessionStorage.setItem('expiresIn', JSON.stringify(resp.data.expiresIn))
+                setLogActiveState(true);
+                setProfileActiveState(false);
+                localStorage.setItem('email', resp.data.email)
+                localStorage.setItem('idToken', JSON.stringify(resp.data.idToken))
+                localStorage.setItem('expiresIn', JSON.stringify(resp.data.expiresIn))
                 localStorage.setItem('registered', JSON.stringify(resp.data.registered))
-                sessionStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
-
-
-                // console.log(resp.data.idToken)
-                // console.log(resp.data.registered)
-                // console.log(resp.data.expiresIn)
+                localStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
+                localStorage.setItem('logActiveState', JSON.stringify(true))
+                localStorage.setItem('profileActiveState', JSON.stringify(false))
             }
             return resp
         },
@@ -76,11 +76,10 @@ function Layout() {
                 setExpiresIn(resp.data.expiresIn);
                 setRefreshToken(resp.data.refreshToken);
                 setRegistered(false);
-                setIsRegistered(false);
-                sessionStorage.setItem('email', resp.data.email)
-                sessionStorage.setItem('idToken', JSON.stringify(resp.data.idToken))
-                sessionStorage.setItem('expiresIn', JSON.stringify(resp.data.expiresIn))
-                sessionStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
+                localStorage.setItem('email', resp.data.email)
+                localStorage.setItem('idToken', JSON.stringify(resp.data.idToken))
+                localStorage.setItem('expiresIn', JSON.stringify(resp.data.expiresIn))
+                localStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
 
             }
 
@@ -93,8 +92,7 @@ function Layout() {
             setExpiresIn("");
             setRegistered(false);
             setRefreshToken("");
-            //localStorage.clear();
-            sessionStorage.clear();
+            localStorage.clear();
         }
     }
     const changePassowrd = {
@@ -102,8 +100,6 @@ function Layout() {
         idToken,
         expiresIn,
         refreshToken,
-        profileActiveState,
-        logActiveState,
         newPassword: async (idToken, password) => {
             const resp = await getRequest(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`, 'POST', {
                 "idToken": idToken,
@@ -120,29 +116,26 @@ function Layout() {
                 setRefreshToken(resp.data.refreshToken);
                 setLogActiveState(true);
                 setProfileActiveState(false);
-                sessionStorage.setItem('email', resp.data.email)
-                sessionStorage.setItem('idToken', JSON.stringify(resp.data.idToken))
-                sessionStorage.setItem('expiresIn', JSON.stringify(resp.data.expiresIn))
-                sessionStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
-                localStorage.setItem('logActiveState', JSON.stringify(true))
-                localStorage.setItem('profileActiveState', JSON.stringify(false))
-
+                localStorage.setItem('email', resp.data.email)
+                localStorage.setItem('idToken', JSON.stringify(resp.data.idToken))
+                localStorage.setItem('expiresIn', JSON.stringify(resp.data.expiresIn))
+                localStorage.setItem('refreshToken', JSON.stringify(resp.data.refreshToken))
             }
-
-
             return resp
         }
-
     }
-
+    const activeStates = {
+        logActiveState,
+        profileActiveState
+    }
     return (
-        <GlobalContext.Provider value={{ auth, changePassowrd }}>
+        <GlobalContext.Provider value={{ auth, changePassowrd, activeStates }}>
             <div className="App">
                 <NavBar />
                 <Outlet />
             </div>
         </GlobalContext.Provider >
-        
+
     )
 }
 export default Layout;
