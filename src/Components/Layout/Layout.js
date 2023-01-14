@@ -24,11 +24,7 @@ function Layout() {
     const [refreshToken, setRefreshToken] = useState(storedRefreshToken);
     const [logActiveState, setLogActiveState] = useState(storedLogActiveState)
     const [profileActiveState, setProfileActiveState] = useState(storedProfileActiveState)
-    console.log(email)
-    console.log(idToken)
-    console.log(registered)
-    console.log(expiresIn)
-    //console.log(idToken)
+    
 
     const auth = {
         email,
@@ -43,7 +39,7 @@ function Layout() {
                 "returnSecureToken": true
             });
 
-            console.log(resp.data)
+            
             if (resp.status === 200) {
                 setEmail(resp.data.email);
                 setIdToken(resp.data.idToken);
@@ -69,7 +65,7 @@ function Layout() {
                 "returnSecureToken": true
             });
 
-            console.log(resp.data)
+            
             if (resp.status === 200) {
                 setEmail(resp.data.email);
                 setIdToken(resp.data.idToken);
@@ -107,7 +103,7 @@ function Layout() {
                 "returnSecureToken": true
             });
 
-            console.log(resp.data)
+            
             if (resp.status === 200) {
                 setEmail(resp.data.email);
                 setIdToken(resp.data.idToken);

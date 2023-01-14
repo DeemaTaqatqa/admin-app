@@ -7,7 +7,6 @@ import Profile from "./Pages/Profile/Profile";
 import Home from "./Pages/Home/Home";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 import RequireAuth from "./Components/RequireAuth/RequireAuth";
-import IsUnAuth from "./Components/RequireAuth/IsUnAuth";
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
 

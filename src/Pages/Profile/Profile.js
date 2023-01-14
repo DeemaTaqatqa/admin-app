@@ -14,8 +14,7 @@ function Profile() {
     
 
     async function onChangeClicked(e) {
-        //console.log(newPassword)
-        //console.log(idToken)
+        
         const resp = await changePassowrd.newPassword(idToken, newPassword)
         if (resp.status === 200) {
             auth.logout();

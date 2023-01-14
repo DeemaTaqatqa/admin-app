@@ -12,20 +12,12 @@ function NavBar() {
     const _logActiveState = activeStates.logActiveState;
     const _profileActiveState = activeStates.profileActiveState;
 
-    console.log(_logActiveState);
-    console.log(_profileActiveState);
 
     const isRegistered = auth.registered;
     const [logActiveState, setLogActiveState] = useState(_logActiveState)
     const [profileActiveState, setProfileActiveState] = useState(_profileActiveState)
     const location = useLocation();
 
-    console.log(auth)
-
-
-    // console.log(activeStates);
-    console.log(logActiveState);
-    console.log(profileActiveState);
    
     useEffect(() => {
         if ("/profile" === location.pathname) {

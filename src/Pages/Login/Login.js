@@ -13,7 +13,7 @@ function Login() {
     const [loginBtnLabel, setLoginBtnLabel] = useState("Login")
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [iswaiting, setIsWaiting] = useState(false)
+    //const [iswaiting, setIsWaiting] = useState(false)
 
     const auth = useContext(GlobalContext).auth;
     const navigate = useNavigate();
@@ -42,15 +42,15 @@ function Login() {
 
     async function OnLoginClicked(e) {
         e.preventDefault()
-        setIsWaiting(true)
+        //setIsWaiting(true)
 
         if (loginBtnLabel === "Login") {
             const resp = await auth.signin(email, password)
-            setIsWaiting(false)
-            console.log(resp)
+            //setIsWaiting(false)
+            
             if (resp.status === 200) {
                 navigate('/')
-                //console.log("status successed")
+                
             }
             else if (email === "") {
                 setError(true)
@@ -123,7 +123,7 @@ function Login() {
                             : ""
                         }
                         <div className="col d-flex justify-content-center">
-                            <button disabled={iswaiting} className="btn-enter btn text-white mt-4 w-50">{loginBtnLabel}</button>
+                            <button  className="btn-enter btn text-white mt-4 w-50">{loginBtnLabel}</button>
                         </div>
                     </form>
                     <button className="btn-create btn col-md-12 text-center mt-2" onClick={OnCreateClicked}>{createBtnLabel}</button>

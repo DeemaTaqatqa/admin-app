@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
-import { GlobalContext } from "../../Utils/Context.js";
+import React from "react";
 import { Navigate } from 'react-router-dom';
 
 function RequireAuth(props) {
-    const auth = useContext(GlobalContext).auth;
-    console.log(auth);
-    console.log("in require")
-
+   
+    const storedEmail = localStorage.getItem('email');
+    
+    
     return (
         <div>
-            {auth.registered ?
+            {storedEmail ?
                 props.children
                 :
                 <Navigate to="/login" />
